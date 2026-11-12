@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NutriAsiste</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--p:#0b6e6e;--pd:#073b46;--pl:#e3f3f1;--bg:#eef3f5;--ink:#14262b;--mut:#5d6f75;--card:#fff;--line:#dbe5e8;--verde:#1fa35c;--amar:#f2b100;--rojo:#e04448;--sh:0 4px 16px rgba(7,59,70,.09)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif;padding-bottom:30px}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px}
+header{background:linear-gradient(150deg,var(--pd),var(--p));color:#fff;padding:22px 0 56px;border-radius:0 0 28px 28px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center}
+header h1{font-size:26px;margin:0;line-height:1.1}header p{margin:2px 0 0;opacity:.85;font-size:15px}
+.lights{margin-left:auto;display:flex;flex-direction:column;gap:4px;background:rgba(0,0,0,.25);padding:6px;border-radius:12px}
+.lights i{width:10px;height:10px;border-radius:50%}
+main{margin-top:-38px}
+section{background:var(--card);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:var(--sh)}
+h2{font-size:19px;margin:0 0 12px;display:flex;align-items:center;gap:10px;color:var(--pd)}
+h2 .bd{width:34px;height:34px;border-radius:10px;background:var(--pl);display:grid;place-items:center;flex:none}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;width:100%;margin-top:10px;cursor:pointer;box-shadow:0 3px 10px rgba(7,59,70,.22)}
+button.sec{background:#fff;color:var(--p);border:2px solid var(--p);box-shadow:none}
+button:active{transform:scale(.98)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--amar);outline-offset:2px}
+input{font:inherit;width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:#f8fbfb;color:var(--ink)}
+input:focus{border-color:var(--p)}
+label{display:block;font-size:14px;font-weight:700;color:var(--mut);margin:12px 0 4px}
+video{width:100%;border-radius:14px;background:#000;display:none;margin-bottom:8px}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.scan{border:2px dashed var(--p);background:var(--pl);border-radius:16px;padding:18px;text-align:center}
+.scan button{margin-top:0}
+.msg{color:var(--mut);min-height:1.3em;margin:8px 0 0;font-size:15px}
+details summary{font-weight:700;cursor:pointer;padding:10px 0 2px;color:var(--p)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#res{display:none;border-radius:20px;overflow:hidden;background:var(--card);box-shadow:var(--sh);margin-bottom:14px;border:3px solid var(--line)}
+#res .top{padding:18px;color:#fff;display:flex;align-items:center;gap:14px}
+#res .top b{display:block;font-size:28px;line-height:1.1}
+#res .top span:last-child{opacity:.92;font-size:15px}
+.ic{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;font-size:36px;font-weight:700;flex:none}
+#res .body{padding:16px}
+.v{border-color:var(--verde)!important}.v .top{background:var(--verde)}.v .ic{color:var(--verde)}
+.a{border-color:var(--amar)!important}.a .top{background:var(--amar);color:#2b2100}.a .ic{color:#b88600}
+.r{border-color:var(--rojo)!important}.r .top{background:var(--rojo)}.r .ic{color:var(--rojo)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border-radius:14px;padding:12px;background:#f5f9fa;border-left:6px solid var(--line)}
+.tile.v{border-left-color:var(--verde)}.tile.a{border-left-color:var(--amar)}.tile.r{border-left-color:var(--rojo)}
+.tile small{color:var(--mut);display:block;font-size:13px}.tile b{font-size:22px}.tile em{font-style:normal;font-size:14px;color:var(--mut)}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0 2px}.bar i{display:block;height:100%;border-radius:6px}
+.it{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.it button{width:auto;margin:0;padding:6px 12px;font-size:14px;box-shadow:none}
+.day{margin-bottom:10px}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand"><div class="logo"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-5 0-8-3-8-8 0-5 4-9 16-9 0 12-4 17-8 17z"/><path d="M8 16c1-4 4-6 8-8"/></svg></div><div><h1>NutriAsiste</h1><p>Alimentación asistida con semáforo</p></div><div class="lights"><i style="background:#e04448"></i><i style="background:#f2b100"></i><i style="background:#1fa35c"></i></div></div></div></header>
+<div class="wrap"><main>
+<section>
+  <h2><span class="bd"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b6e6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M4 12h16"/></svg></span>Escanear producto</h2>
+  <video id="cam" playsinline muted></video>
+  <div class="scan"><button id="bCam">Abrir cámara y escanear</button></div>
+  <label for="cod">O escriba el código de barras</label>
+  <div class="row"><input id="cod" inputmode="numeric" placeholder="Ej: 7802800000000"><button id="bCod" style="margin-top:0;max-width:120px">Buscar</button></div>
+  <p class="msg" id="msg"></p>
+  <details><summary>Ingresar producto a mano</summary>
+    <label for="mN">Nombre</label><input id="mN">
+    <div class="g2">
+      <div><label for="m0">Calorías (kcal)</label><input id="m0" type="number" inputmode="decimal"></div>
+      <div><label for="m1">Sodio (mg)</label><input id="m1" type="number" inputmode="decimal"></div>
+      <div><label for="m2">Azúcar (g)</label><input id="m2" type="number" inputmode="decimal"></div>
+      <div><label for="m3">Grasas (g)</label><input id="m3" type="number" inputmode="decimal"></div>
+    </div>
+    <button class="sec" id="bMan">Evaluar</button>
+  </details>
+</section>
+
+<div id="res" aria-live="polite"></div>
+
+<section>
+  <h2><span class="bd"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b6e6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg></span>Mi día</h2>
+  <div id="tot"></div>
+  <div id="lista"></div>
+  <p class="msg" id="sem"></p>
+  <button class="sec" id="bWa">Avisar a mi cuidador por WhatsApp</button>
+  <button class="sec" id="bClr">Empezar un día nuevo</button>
+</section>
+
+<section>
+  <h2><span class="bd"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0b6e6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>Mi perfil</h2>
+  <label for="pNom">Nombre</label><input id="pNom" placeholder="Para saludarle en la voz">
+  <div class="g2" id="lim"></div>
+  <label for="pWa">WhatsApp del cuidador (con código de país)</label><input id="pWa" inputmode="tel" placeholder="56912345678">
+  <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="pVoz" style="width:24px;height:24px"> Hablar los avisos en voz alta</label>
+  <button id="bPer">Guardar perfil</button>
+</section>
+
+</main></div>
+<script>
+const NUT=[{n:"Calorías",u:"kcal",d:2000},{n:"Sodio",u:"mg",d:2000},{n:"Azúcar",u:"g",d:50},{n:"Grasas",u:"g",d:70}];
+const A=0.15,B=0.30; // umbrales por porción: a = 15 % y b = 30 % del límite diario
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let S={nom:"",wa:"",voz:true,lim:NUT.map(x=>x.d),hist:[]};
+try{const g=localStorage.getItem("nutriasiste");if(g)S=Object.assign(S,JSON.parse(g))}catch(e){}
+const save=()=>{try{localStorage.setItem("nutriasiste",JSON.stringify(S))}catch(e){}};
+let cur=null,stream=null,timer=null;
+
+// Función por tramos: verde si x<=a, amarillo si a<x<=b, rojo si x>b
+const color=(x,l)=>x<=A*l?"v":(x<=B*l?"a":"r");
+const ORD={v:0,a:1,r:2};
+const hoy=()=>new Date().toISOString().slice(0,10);
+const getP=()=>cur.per100?cur.per100.map(v=>+(v*cur.g/100).toFixed(1)):cur.p;
+
+function hablar(t){
+  if(!S.voz||!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";u.rate=.9;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith("es"));if(v)u.voice=v;
+  speechSynthesis.speak(u);
+}
+
+function evaluar(){
+  const p=getP(),cols=p.map((x,i)=>color(x,S.lim[i]));
+  const peor=cols.reduce((a,c)=>ORD[c]>ORD[a]?c:a,"v");
+  const malos=NUT.map((n,i)=>cols[i]===peor&&peor!=="v"?n.n.toLowerCase():null).filter(Boolean);
+  const lista=malos.join(" y ");
+  const nom=S.nom?S.nom+", ":"";
+  // Efecto en el consumo del día (T_j = suma de la columna j)
+  const T=totales(),pasa=NUT.map((n,i)=>T[i]+p[i]>S.lim[i]?n.n.toLowerCase():null).filter(Boolean);
+  let voz,tit;
+  if(peor==="r"){tit="No consumir";voz=`Atención ${nom}este producto es peligroso para usted. Tiene demasiado ${lista}. No lo consuma.`}
+  else if(peor==="a"){tit="Con cuidado";voz=`Precaución ${nom}consuma muy poco de este producto. Tiene bastante ${lista}.`}
+  else{tit="Adecuado";voz=`${nom}este producto es adecuado para usted.`}
+  if(pasa.length)voz+=` Si lo come, hoy se pasará del límite de ${pasa.join(" y ")}.`;
+  cur.voz=voz;
+  const r=$("res");r.className=peor;r.style.display="block";
+  const IC={v:"✓",a:"!",r:"✕"};
+  r.innerHTML=`<div class="top"><span class="ic">${IC[peor]}</span><span><b>${tit}</b><span>${esc(cur.nombre)}</span></span></div><div class="body">`+
+   (cur.per100?`<label for="gr" style="margin-top:0">Porción (gramos)</label><input id="gr" type="number" inputmode="decimal" value="${cur.g}" style="margin-bottom:12px">`:"")+
+   `<div class="tiles">`+NUT.map((n,i)=>{const pc=p[i]/S.lim[i]*100;const c=cols[i];const cv={v:"--verde",a:"--amar",r:"--rojo"}[c];
+    return `<div class="tile ${c}"><small>${n.n}</small><b>${p[i]} <em>${n.u}</em></b><div class="bar"><i style="width:${Math.min(pc,100)}%;background:var(${cv})"></i></div><small>${pc.toFixed(0)} % de su límite</small></div>`}).join("")+`</div>`+
+   (pasa.length?`<p style="margin:12px 0 0"><b>Hoy se pasaría del límite de ${pasa.join(" y ")}.</b></p>`:"")+
+   `<button id="bGu">Guardar en mi día</button><button class="sec" id="bVoz">Repetir aviso en voz alta</button></div>`;
+  if($("gr"))$("gr").oninput=e=>{cur.g=Math.max(+e.target.value||0,0);evaluar()};
+  $("bGu").onclick=guardar;$("bVoz").onclick=()=>{const w=S.voz;S.voz=true;hablar(cur.voz);S.voz=w};
+  hablar(voz);
+  r.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function guardar(){
+  S.hist.push({f:hoy(),nombre:cur.nombre,p:getP()});save();pintarDia();
+  $("res").style.display="none";$("msg").textContent="Guardado en su día.";cur=null;
+}
+// Matriz N: filas = productos de hoy, columnas = nutrientes
+const matriz=()=>S.hist.filter(h=>h.f===hoy()).map(h=>h.p);
+const totales=()=>NUT.map((_,j)=>matriz().reduce((s,fila)=>s+fila[j],0));
+function pintarDia(){
+  const T=totales();
+  $("tot").innerHTML=NUT.map((n,i)=>{const pc=T[i]/S.lim[i]*100;const c=pc>100?"--rojo":(pc>70?"--amar":"--verde");
+   return `<div class="day"><b>${n.n}</b>: ${T[i].toFixed(0)} de ${S.lim[i]} ${n.u} (${pc.toFixed(0)} %)<div class="bar"><i style="width:${Math.min(pc,100)}%;background:var(${c})"></i></div></div>`}).join("");
+  const hs=S.hist.map((h,k)=>({h,k})).filter(o=>o.h.f===hoy());
+  $("lista").innerHTML=hs.length?hs.map(o=>`<div class="it"><span>${esc(o.h.nombre)}</span><button class="sec" data-k="${o.k}">Quitar</button></div>`).join(""):'<p class="msg">Aún no ha guardado productos hoy.</p>';
+  $("lista").querySelectorAll("button").forEach(b=>b.onclick=()=>{S.hist.splice(+b.dataset.k,1);save();pintarDia()});
+  // Sucesión semanal (T1..T7) y promedio de calorías
+  const dias=[...new Set(S.hist.map(h=>h.f))].sort().slice(-7);
+  if(dias.length>1){const ts=dias.map(d=>S.hist.filter(h=>h.f===d).reduce((s,h)=>s+h.p[1],0));
+   const prom=ts.reduce((a,b)=>a+b,0)/ts.length;const tend=ts[ts.length-1]-ts[0];
+   $("sem").textContent=`Sodio últimos ${dias.length} días: promedio ${prom.toFixed(0)} mg al día, ${tend>0?"subiendo":tend<0?"bajando":"estable"}.`}
+  else $("sem").textContent="";
+}
+
+async function buscar(code){
+  code=code.replace(/\D/g,"");if(!code){$("msg").textContent="Escriba solo números.";return}
+  $("msg").textContent="Buscando producto...";
+  try{
+    const r=await fetch(`https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=product_name,nutriments,serving_quantity`);
+    const j=await r.json();
+    if(j.status!==1){$("msg").textContent="No encontré ese producto. Ingréselo a mano abajo.";return}
+    const n=j.product.nutriments||{};
+    const sod=n.sodium_100g!=null?n.sodium_100g*1000:(n.salt_100g!=null?n.salt_100g*400:0);
+    cur={nombre:j.product.product_name||"Producto "+code,per100:[n["energy-kcal_100g"]||0,sod,n.sugars_100g||0,n.fat_100g||0],g:+j.product.serving_quantity||100};
+    $("msg").textContent="";evaluar();
+  }catch(e){$("msg").textContent="Sin conexión. Ingrese el producto a mano."}
+}
+
+async function camara(){
+  if(stream){parar();return}
+  if(!("BarcodeDetector" in window)){$("msg").textContent="Este navegador no lee códigos. Use Chrome en el celular o escriba el código.";return}
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+    const v=$("cam");v.srcObject=stream;v.style.display="block";await v.play();
+    $("bCam").textContent="Cerrar cámara";$("msg").textContent="Apunte al código de barras.";
+    const det=new BarcodeDetector({formats:["ean_13","ean_8","upc_a","upc_e"]});
+    timer=setInterval(async()=>{try{const c=await det.detect(v);if(c.length){const code=c[0].rawValue;parar();buscar(code)}}catch(e){}},400);
+  }catch(e){$("msg").textContent="No pude abrir la cámara. Dé el permiso o escriba el código."}
+}
+function parar(){clearInterval(timer);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$("cam").style.display="none";$("bCam").textContent="Abrir cámara y escanear"}
+
+$("bCam").onclick=camara;
+$("bCod").onclick=()=>buscar($("cod").value);
+$("bMan").onclick=()=>{
+  const p=[0,1,2,3].map(i=>+$("m"+i).value||0);
+  cur={nombre:$("mN").value||"Producto sin nombre",per100:null,p};evaluar();
+};
+$("bClr").onclick=()=>{if(confirm("¿Empezar un día nuevo? Se borran los productos de hoy.")){S.hist=S.hist.filter(h=>h.f!==hoy());save();pintarDia()}};
+$("bWa").onclick=()=>{
+  const T=totales();
+  const t=`Resumen de ${S.nom||"mi día"} en NutriAsiste: `+NUT.map((n,i)=>`${n.n} ${T[i].toFixed(0)}/${S.lim[i]} ${n.u}`).join(", ")+".";
+  window.open(`https://wa.me/${S.wa.replace(/\D/g,"")}?text=${encodeURIComponent(t)}`,"_blank");
+};
+$("lim").innerHTML=NUT.map((n,i)=>`<div><label for="l${i}">${n.n} diario (${n.u})</label><input id="l${i}" type="number" inputmode="decimal" value="${S.lim[i]}"></div>`).join("");
+$("pNom").value=S.nom;$("pWa").value=S.wa;$("pVoz").checked=S.voz;
+$("bPer").onclick=()=>{
+  S.nom=$("pNom").value.trim();S.wa=$("pWa").value.trim();S.voz=$("pVoz").checked;
+  S.lim=NUT.map((n,i)=>+$("l"+i).value||n.d);save();pintarDia();$("msg").textContent="Perfil guardado.";
+};
+if("speechSynthesis" in window)speechSynthesis.getVoices();
+pintarDia();
+</script>
+</body>
+</html>

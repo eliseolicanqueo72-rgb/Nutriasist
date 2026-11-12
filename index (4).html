@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NutriAsiste</title>
+<meta name="theme-color" content="#073b46">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{--p:#0b6e6e;--pd:#073b46;--pl:#e3f3f1;--bg:#eef3f5;--ink:#14262b;--mut:#5d6f75;--line:#dbe5e8;--v:#1fa35c;--a:#f2b100;--r:#e04448;--sh:0 4px 16px rgba(7,59,70,.09)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+.scr{display:none;max-width:560px;margin:0 auto}.scr.on{display:block}
+.hd{background:linear-gradient(150deg,var(--pd),var(--p));color:#fff;padding:calc(20px + env(safe-area-inset-top,0px)) 18px 52px;border-radius:0 0 28px 28px}
+.hd small{opacity:.8;font-size:15px}.hd h1{margin:2px 0 0;font-size:26px;line-height:1.15}
+.in{padding:0 14px;margin-top:-34px}
+.card{background:#fff;border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+h2{font-size:18px;margin:0 0 10px;color:var(--pd)}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:14px 16px;background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;width:100%;margin-top:10px;cursor:pointer;box-shadow:0 3px 10px rgba(7,59,70,.22)}
+button.sec{background:#fff;color:var(--p);border:2px solid var(--p);box-shadow:none}
+button:active{transform:scale(.98)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+input{font:inherit;width:100%;padding:12px;border-radius:12px;border:2px solid var(--line);background:#f8fbfb;color:var(--ink)}
+label{display:block;font-size:14px;font-weight:700;color:var(--mut);margin:12px 0 4px}
+video{width:100%;border-radius:14px;background:#000;display:none;margin-bottom:8px}
+.row{display:flex;gap:8px}.row>*{flex:1}.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.msg{color:var(--mut);min-height:1.3em;margin:8px 0 0;font-size:15px}
+.scan{border:2px dashed var(--p);background:var(--pl);border-radius:16px;padding:16px}.scan button{margin:0}
+details summary{font-weight:700;cursor:pointer;padding:10px 0 2px;color:var(--p)}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0 2px}.bar i{display:block;height:100%;border-radius:6px}
+.v{--c:var(--v)}.a{--c:var(--a)}.r{--c:var(--r)}
+.status{display:flex;align-items:center;gap:14px}
+.big{width:70px;height:70px;border-radius:50%;background:var(--c,var(--line));color:#fff;display:grid;place-items:center;font-size:38px;font-weight:700;flex:none}
+.a .big{color:#2b2100}.status b{font-size:21px;line-height:1.2;display:block}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border-radius:14px;padding:12px;background:#f5f9fa;border-left:6px solid var(--c,var(--line))}
+.tile small{color:var(--mut);display:block;font-size:13px}.tile b{font-size:21px}.tile em{font-style:normal;font-size:14px;color:var(--mut)}
+#res{display:none;border-radius:20px;overflow:hidden;background:#fff;box-shadow:var(--sh);margin-bottom:14px;border:3px solid var(--c)}
+#res .top{padding:16px;background:var(--c);color:#fff;display:flex;align-items:center;gap:14px}
+.a #res .top,#res.a .top{color:#2b2100}
+#res .top b{display:block;font-size:27px;line-height:1.1}.ic{width:60px;height:60px;border-radius:50%;background:#fff;color:var(--c);display:grid;place-items:center;font-size:34px;font-weight:700;flex:none}
+#res .body{padding:16px}
+.it{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.it:first-of-type{border-top:0}.dot{width:16px;height:16px;border-radius:50%;background:var(--c);flex:none}.it span{flex:1}
+.it button{width:auto;margin:0;padding:6px 12px;font-size:14px;box-shadow:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chips button{width:auto;margin:0;padding:8px 14px;font-size:15px;box-shadow:none}
+.chart{display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:8px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:12px;color:var(--mut)}
+.col i{width:100%;border-radius:8px 8px 0 0;background:var(--c,var(--line));min-height:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:6px 4px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}
+nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(7,59,70,.08);z-index:5}
+nav button{flex:1;max-width:112px;background:none;color:var(--mut);box-shadow:none;margin:0;padding:6px 2px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:12px}
+nav button.on{color:var(--p);background:var(--pl)}
+#toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--pd);color:#fff;padding:10px 18px;border-radius:20px;display:none;z-index:9}
+#bMic{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;padding:0;margin:0;display:grid;place-items:center;z-index:6;box-shadow:0 6px 18px rgba(7,59,70,.35)}
+#bMic.on{background:var(--r);animation:lat 1s infinite}
+@keyframes lat{50%{transform:scale(1.12)}}
+@media (prefers-reduced-motion:reduce){#bMic.on{animation:none}}
+.av{width:64px;height:64px;border-radius:50%;background:var(--pl);color:var(--p);display:grid;place-items:center;font-size:28px;font-weight:700;margin:0 auto 6px}
+</style>
+</head>
+<body>
+
+<!-- INICIO -->
+<div class="scr on" id="s-ini">
+  <div class="hd"><small id="fecha"></small><h1 id="salu"></h1></div>
+  <div class="in">
+    <div class="card" id="estado"></div>
+    <div class="card" id="inst" style="display:none"><b>Instale NutriAsiste en su celular</b><button id="bInst">Instalar como app</button></div>
+    <div class="card"><h2>Lo último que registró</h2><div id="ult"></div></div>
+    <button data-go="esc" style="margin:0 0 14px">Escanear un producto</button>
+  </div>
+</div>
+
+<!-- ESCANEAR -->
+<div class="scr" id="s-esc">
+  <div class="hd"><small>Paso 1</small><h1>Escanear producto</h1></div>
+  <div class="in">
+    <div class="card">
+      <video id="cam" playsinline muted></video>
+      <div class="scan"><button id="bCam">Abrir cámara y escanear</button></div>
+      <label for="cod">O escriba el código de barras</label>
+      <div class="row"><input id="cod" inputmode="numeric" placeholder="Número bajo las barras"><button id="bCod" style="margin-top:0;max-width:110px">Buscar</button></div>
+      <p class="msg" id="msg" aria-live="polite"></p>
+      <details><summary>Ingresar producto a mano</summary>
+        <label for="mN">Nombre</label><input id="mN">
+        <div class="g2" id="mG"></div>
+        <button class="sec" id="bMan">Evaluar</button>
+      </details>
+    </div>
+    <div id="res" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- MI DÍA -->
+<div class="scr" id="s-dia">
+  <div class="hd"><small>Hoy</small><h1>Mi día</h1></div>
+  <div class="in">
+    <div class="card"><h2>Lo que llevo consumido</h2><div id="tot"></div></div>
+    <div class="card"><h2>Productos de hoy</h2><div id="lista"></div>
+      <button id="bLeer">Escuchar mi resumen del día</button>
+      <button class="sec" id="bWa">Enviar resumen al cuidador</button>
+    </div>
+  </div>
+</div>
+
+<!-- SEMANA -->
+<div class="scr" id="s-sem">
+  <div class="hd"><small>Últimos 7 días</small><h1>Mi semana</h1></div>
+  <div class="in">
+    <div class="card"><div class="chips" id="chips"></div><div class="chart" id="chart"></div><p id="resumen" style="margin:12px 0 0"></p><button class="sec" id="bLeerS">Escuchar resumen de la semana</button></div>
+    <div class="card"><h2>Tabla de la semana</h2><div style="overflow-x:auto" id="tabla"></div></div>
+  </div>
+</div>
+
+<!-- PERFIL -->
+<div class="scr" id="s-per">
+  <div class="hd"><small>Mi cuenta</small><h1>Perfil y cuidador</h1></div>
+  <div class="in">
+    <div class="card">
+      <div class="av" id="av">?</div>
+      <label for="pNom">Nombre</label><input id="pNom">
+      <h2 style="margin-top:18px">Límites por día</h2><div class="g2" id="lim"></div>
+    </div>
+    <div class="card">
+      <h2>Cuidador y voz</h2>
+      <label for="pWa">WhatsApp del cuidador (con código de país)</label><input id="pWa" inputmode="tel" placeholder="56912345678">
+      <label style="display:flex;gap:10px;align-items:center;color:var(--ink)"><input type="checkbox" id="pVoz" style="width:24px;height:24px"> Hablar los avisos en voz alta</label>
+      <button id="bPer">Guardar cambios</button>
+      <button class="sec" id="bBor">Borrar todos mis datos</button>
+    </div>
+  </div>
+</div>
+
+<button id="bMic" aria-label="Hablar con NutriAsiste"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button>
+<nav id="nav"></nav>
+<div id="toast" role="status"></div>
+
+<script>
+const NUT=[{n:"Calorías",u:"kcal",d:2000},{n:"Sodio",u:"mg",d:2000},{n:"Azúcar",u:"g",d:50},{n:"Grasas",u:"g",d:70}];
+const A=0.15,B=0.30; // umbrales por porción: a = 15 % y b = 30 % del límite diario
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let S={nom:"",wa:"",voz:true,lim:NUT.map(x=>x.d),hist:[]};
+try{const g=localStorage.getItem("nutriasiste");if(g)S=Object.assign(S,JSON.parse(g))}catch(e){}
+const save=()=>{try{localStorage.setItem("nutriasiste",JSON.stringify(S))}catch(e){}};
+let cur=null,stream=null,timer=null,selN=1,tab="ini";
+const fmt=d=>d.toLocaleDateString("sv-SE");
+const hoy=()=>fmt(new Date());
+const toast=t=>{const e=$("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2200)};
+
+// Función por tramos: verde si x<=a, amarillo si a<x<=b, rojo si x>b
+const color=(x,l)=>x<=A*l?"v":(x<=B*l?"a":"r");
+const ORD={v:0,a:1,r:2};
+const colDia=pc=>pc>100?"r":(pc>70?"a":"v");
+
+// Matriz N del día: filas = productos, columnas = nutrientes; T_j = suma de la columna j
+const matriz=f=>S.hist.filter(h=>h.f===f).map(h=>h.p);
+const totales=f=>NUT.map((_,j)=>matriz(f||hoy()).reduce((s,r)=>s+r[j],0));
+
+function hablar(t,f){
+  if((!S.voz&&!f)||!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";u.rate=.9;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith("es"));if(v)u.voice=v;speechSynthesis.speak(u);
+}
+
+/* ---------- navegación ---------- */
+const TABS=[["ini","Inicio",'<path d="M3 11l9-8 9 8v10a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1z"/>'],
+["esc","Escanear",'<path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M7 12h10"/>'],
+["dia","Mi día",'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'],
+["sem","Semana",'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'],
+["per","Perfil",'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>']];
+$("nav").innerHTML=TABS.map(t=>`<button data-go="${t[0]}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${t[2]}</svg>${t[1]}</button>`).join("");
+function ir(t){
+  if(t!=="esc")parar();
+  tab=t;document.querySelectorAll(".scr").forEach(e=>e.classList.toggle("on",e.id==="s-"+t));
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===t));
+  ({ini:pintarIni,dia:pintarDia,sem:pintarSem,per:pintarPer}[t]||(()=>{}))();
+  window.scrollTo(0,0);
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)ir(b.dataset.go)});
+
+/* ---------- inicio ---------- */
+function pintarIni(){
+  const h=new Date().getHours(),sal=h<12?"Buenos días":h<20?"Buenas tardes":"Buenas noches";
+  $("salu").textContent=sal+(S.nom?", "+S.nom:"");
+  $("fecha").textContent=new Date().toLocaleDateString("es-CL",{weekday:"long",day:"numeric",month:"long"});
+  const T=totales(),n=matriz(hoy()).length,pcs=T.map((x,i)=>x/S.lim[i]*100);
+  const mx=Math.max(...pcs),im=pcs.indexOf(mx),c=n?colDia(mx):"",txt=!n?"Aún no ha registrado comidas hoy.":
+    c==="r"?`Hoy se pasó del límite de ${NUT[im].n.toLowerCase()}.`:c==="a"?`Cuidado: se acerca a su límite de ${NUT[im].n.toLowerCase()}.`:"Va muy bien hoy.";
+  $("estado").innerHTML=`<div class="status ${c}"><span class="big">${!n?"–":{v:"✓",a:"!",r:"✕"}[c]}</span><div><b>${txt}</b><small style="color:var(--mut)">${n} producto${n===1?"":"s"} registrado${n===1?"":"s"} hoy</small></div></div>`;
+  const u=S.hist.slice(-3).reverse();
+  $("ult").innerHTML=u.length?u.map(h=>{const cc=h.p.map((x,i)=>color(x,S.lim[i])).reduce((a,c)=>ORD[c]>ORD[a]?c:a,"v");
+    return `<div class="it ${cc}"><span class="dot"></span><span>${esc(h.nombre)}</span></div>`}).join(""):'<p class="msg">Escanee su primer producto para empezar.</p>';
+}
+
+/* ---------- escanear ---------- */
+$("mG").innerHTML=NUT.map((n,i)=>`<div><label for="m${i}">${n.n} (${n.u})</label><input id="m${i}" type="number" inputmode="decimal"></div>`).join("");
+function evaluar(){
+  const p=cur.per100?cur.per100.map(v=>+(v*cur.g/100).toFixed(1)):cur.p;cur.pf=p;
+  const cols=p.map((x,i)=>color(x,S.lim[i])),peor=cols.reduce((a,c)=>ORD[c]>ORD[a]?c:a,"v");
+  const lista=NUT.filter((n,i)=>peor!=="v"&&cols[i]===peor).map(n=>n.n.toLowerCase()).join(" y ");
+  const nom=S.nom?S.nom+", ":"";
+  const T=totales(),pasa=NUT.filter((n,i)=>T[i]+p[i]>S.lim[i]).map(n=>n.n.toLowerCase());
+  let voz,tit;
+  if(peor==="r"){tit="No consumir";voz=`Atención ${nom}este producto es peligroso para usted. Tiene demasiado ${lista}. No lo consuma.`}
+  else if(peor==="a"){tit="Con cuidado";voz=`Precaución ${nom}consuma muy poco de este producto. Tiene bastante ${lista}.`}
+  else{tit="Adecuado";voz=`${nom}este producto es adecuado para usted.`}
+  if(pasa.length)voz+=` Si lo come, hoy se pasará del límite de ${pasa.join(" y ")}.`;
+  cur.voz=voz;cur.peor=peor;cur.tit=tit;
+  const r=$("res");r.className=peor;r.style.display="block";
+  r.innerHTML=`<div class="top"><span class="ic">${{v:"✓",a:"!",r:"✕"}[peor]}</span><span><b>${tit}</b>${esc(cur.nombre)}</span></div><div class="body">`+
+   (cur.per100?`<label for="gr" style="margin-top:0">Porción (gramos)</label><input id="gr" type="number" inputmode="decimal" value="${cur.g}" style="margin-bottom:12px">`:"")+
+   `<div class="tiles">`+NUT.map((n,i)=>{const pc=p[i]/S.lim[i]*100;return `<div class="tile ${cols[i]}"><small>${n.n}</small><b>${p[i]} <em>${n.u}</em></b><div class="bar"><i style="width:${Math.min(pc,100)}%;background:var(--c)"></i></div><small>${pc.toFixed(0)} % de su límite</small></div>`}).join("")+`</div>`+
+   (pasa.length?`<p style="margin:12px 0 0"><b>Hoy se pasaría del límite de ${pasa.join(" y ")}.</b></p>`:"")+
+   `<button id="bGu">Guardar en mi día</button><button class="sec" id="bVoz">Repetir aviso en voz alta</button>`+
+   (S.wa&&peor!=="v"?`<button class="sec" id="bAv">Avisar al cuidador</button>`:"")+`</div>`;
+  if($("gr"))$("gr").oninput=e=>{cur.g=Math.max(+e.target.value||0,0);evaluar()};
+  $("bGu").onclick=()=>{S.hist.push({f:hoy(),nombre:cur.nombre,p:cur.pf});save();cur=null;$("res").style.display="none";toast("Guardado en su día");ir("dia")};
+  $("bVoz").onclick=()=>{const w=S.voz;S.voz=true;hablar(cur.voz);S.voz=w};
+  if($("bAv"))$("bAv").onclick=()=>wa(`Aviso de NutriAsiste: ${S.nom||"el usuario"} escaneó "${cur.nombre}" y salió ${cur.tit.toUpperCase()}${lista?" por "+lista:""}.`);
+  hablar(voz);r.scrollIntoView({behavior:"smooth",block:"start"});
+}
+const wa=t=>{if(!S.wa){toast("Falta el WhatsApp del cuidador en Perfil");return}window.open(`https://wa.me/${S.wa.replace(/\D/g,"")}?text=${encodeURIComponent(t)}`,"_blank")};
+
+async function buscar(code){
+  code=code.replace(/\D/g,"");if(!code){$("msg").textContent="Escriba solo números.";return}
+  $("msg").textContent="Buscando producto...";
+  try{
+    const r=await fetch(`https://world.openfoodfacts.org/api/v2/product/${code}.json?fields=product_name,nutriments,serving_quantity`);
+    const j=await r.json();
+    if(j.status!==1){$("msg").textContent="No encontré ese producto. Ingréselo a mano abajo.";return}
+    const n=j.product.nutriments||{};
+    const sod=n.sodium_100g!=null?n.sodium_100g*1000:(n.salt_100g!=null?n.salt_100g*400:0);
+    cur={nombre:j.product.product_name||"Producto "+code,per100:[n["energy-kcal_100g"]||0,sod,n.sugars_100g||0,n.fat_100g||0],g:+j.product.serving_quantity||100};
+    $("msg").textContent="";evaluar();
+  }catch(e){$("msg").textContent="Sin conexión. Ingrese el producto a mano."}
+}
+async function camara(){
+  if(stream){parar();return}
+  if(!("BarcodeDetector" in window)){$("msg").textContent="Este navegador no lee códigos. Use Chrome en el celular o escriba el código.";return}
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+    const v=$("cam");v.srcObject=stream;v.style.display="block";await v.play();
+    $("bCam").textContent="Cerrar cámara";$("msg").textContent="Apunte al código de barras.";
+    const det=new BarcodeDetector({formats:["ean_13","ean_8","upc_a","upc_e"]});
+    timer=setInterval(async()=>{try{const c=await det.detect(v);if(c.length){const code=c[0].rawValue;parar();buscar(code)}}catch(e){}},400);
+  }catch(e){$("msg").textContent="No pude abrir la cámara. Dé el permiso o escriba el código."}
+}
+function parar(){clearInterval(timer);if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;$("cam").style.display="none";$("bCam").textContent="Abrir cámara y escanear"}
+$("bCam").onclick=camara;$("bCod").onclick=()=>buscar($("cod").value);
+$("bMan").onclick=()=>{cur={nombre:$("mN").value||"Producto sin nombre",per100:null,p:[0,1,2,3].map(i=>+$("m"+i).value||0)};evaluar()};
+
+/* ---------- mi día ---------- */
+function pintarDia(){
+  const T=totales();
+  $("tot").innerHTML=NUT.map((n,i)=>{const pc=T[i]/S.lim[i]*100;return `<div class="${colDia(pc)}" style="margin-bottom:10px"><b>${n.n}</b>: ${T[i].toFixed(0)} de ${S.lim[i]} ${n.u} (${pc.toFixed(0)} %)<div class="bar"><i style="width:${Math.min(pc,100)}%;background:var(--c)"></i></div></div>`}).join("");
+  const hs=S.hist.map((h,k)=>({h,k})).filter(o=>o.h.f===hoy());
+  $("lista").innerHTML=hs.length?hs.map(o=>{const cc=o.h.p.map((x,i)=>color(x,S.lim[i])).reduce((a,c)=>ORD[c]>ORD[a]?c:a,"v");
+    return `<div class="it ${cc}"><span class="dot"></span><span>${esc(o.h.nombre)}</span><button class="sec" data-k="${o.k}">Quitar</button></div>`}).join(""):'<p class="msg">Aún no ha guardado productos hoy.</p>';
+  $("lista").querySelectorAll("button").forEach(b=>b.onclick=()=>{S.hist.splice(+b.dataset.k,1);save();pintarDia()});
+}
+$("bWa").onclick=()=>{const T=totales();wa(`Resumen de ${S.nom||"hoy"} en NutriAsiste: `+NUT.map((n,i)=>`${n.n} ${T[i].toFixed(0)}/${S.lim[i]} ${n.u}`).join(", ")+".")};
+
+/* ---------- semana: sucesión (T1..T7), promedio y tendencia ---------- */
+function pintarSem(){
+  const dias=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return d});
+  const M=dias.map(d=>totales(fmt(d)));  // matriz 7 x 4
+  $("chips").innerHTML=NUT.map((n,i)=>`<button class="${i===selN?"":"sec"}" data-n="${i}">${n.n}</button>`).join("");
+  $("chips").querySelectorAll("button").forEach(b=>b.onclick=()=>{selN=+b.dataset.n;pintarSem()});
+  const l=S.lim[selN];
+  $("chart").innerHTML=dias.map((d,i)=>{const pc=M[i][selN]/l*100;return `<div class="col ${M[i][selN]?colDia(pc):""}"><span>${M[i][selN]?M[i][selN].toFixed(0):""}</span><i style="height:${Math.min(pc,100)*1.1}px"></i>${"DLMMJVS"[d.getDay()]}</div>`}).join("");
+  const con=M.map(r=>r[selN]).filter(x=>x>0);
+  if(!con.length){$("resumen").textContent="Aún no hay datos esta semana."}
+  else{const prom=con.reduce((a,b)=>a+b,0)/con.length,ult=con[con.length-1];
+   const t=con.length<2?"":ult>prom*1.1?"Su último día va subiendo.":ult<prom*.9?"Su último día va bajando.":"Se mantiene estable.";
+   $("resumen").innerHTML=`<b>${NUT[selN].n}:</b> promedio ${prom.toFixed(0)} ${NUT[selN].u} al día (límite ${l}). ${t}`}
+  $("tabla").innerHTML=`<table><tr><th>Día</th>${NUT.map(n=>`<th>${n.n.slice(0,3)}</th>`).join("")}</tr>`+dias.map((d,i)=>`<tr><td>${d.toLocaleDateString("es-CL",{weekday:"short",day:"numeric"})}</td>${M[i].map(x=>`<td>${x.toFixed(0)}</td>`).join("")}</tr>`).join("")+`</table>`;
+}
+
+/* ---------- perfil ---------- */
+$("lim").innerHTML=NUT.map((n,i)=>`<div><label for="l${i}">${n.n} (${n.u})</label><input id="l${i}" type="number" inputmode="decimal"></div>`).join("");
+function pintarPer(){
+  $("pNom").value=S.nom;$("pWa").value=S.wa;$("pVoz").checked=S.voz;S.lim.forEach((v,i)=>$("l"+i).value=v);
+  $("av").textContent=(S.nom||"?").charAt(0).toUpperCase();
+}
+$("bPer").onclick=()=>{S.nom=$("pNom").value.trim();S.wa=$("pWa").value.trim();S.voz=$("pVoz").checked;S.lim=NUT.map((n,i)=>+$("l"+i).value||n.d);save();pintarPer();toast("Cambios guardados")};
+$("bBor").onclick=()=>{if(confirm("¿Borrar todos sus datos y productos guardados?")){S.hist=[];save();toast("Datos borrados");pintarIni()}};
+
+
+/* ---------- voz asistida: leer resúmenes y órdenes habladas ---------- */
+function resumenDia(){
+  const T=totales();if(!matriz(hoy()).length)return "Hoy todavía no ha registrado productos.";
+  let t=`Hoy lleva ${T[0].toFixed(0)} calorías de ${S.lim[0]}, ${T[1].toFixed(0)} miligramos de sodio de ${S.lim[1]}, ${T[2].toFixed(0)} gramos de azúcar de ${S.lim[2]} y ${T[3].toFixed(0)} gramos de grasas de ${S.lim[3]}.`;
+  const pasa=NUT.filter((n,i)=>T[i]>S.lim[i]).map(n=>n.n.toLowerCase());
+  return t+(pasa.length?` Atención: se pasó del límite de ${pasa.join(" y ")}.`:" Va dentro de sus límites.");
+}
+$("bLeer").onclick=()=>hablar(resumenDia(),1);
+$("bLeerS").onclick=()=>hablar($("resumen").textContent,1);
+function orden(t){
+  const q=t.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  if(/escane|camara|producto/.test(q)){ir("esc");setTimeout(camara,300)}
+  else if(/semana/.test(q)){ir("sem");hablar($("resumen").textContent,1)}
+  else if(/mi dia|hoy|llevo|consumido|resumen/.test(q)){ir("dia");hablar(resumenDia(),1)}
+  else if(/perfil|cuidador/.test(q))ir("per");
+  else if(/inicio|casa/.test(q))ir("ini");
+  else if(/repet/.test(q)&&cur)hablar(cur.voz,1);
+  else{toast("No entendí: "+t);hablar("No le entendí. Diga escanear, mi día, mi semana, perfil o inicio.",1)}
+}
+$("bMic").onclick=()=>{
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast("Este navegador no entiende voz. Use Chrome.");return}
+  if("speechSynthesis" in window)speechSynthesis.cancel();
+  const r=new SR();r.lang="es-CL";r.interimResults=false;r.maxAlternatives=1;
+  $("bMic").classList.add("on");toast("Escuchando... diga una orden");
+  r.onresult=e=>orden(e.results[0][0].transcript.toLowerCase());
+  r.onerror=e=>toast(e.error==="not-allowed"?"Permita el micrófono para usar la voz":"No le escuché, intente otra vez");
+  r.onend=()=>$("bMic").classList.remove("on");
+  try{r.start()}catch(e){}
+};
+
+/* ---------- instalar como app ---------- */
+let evI=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();evI=e;$("inst").style.display="block"});
+$("bInst").onclick=async()=>{if(!evI)return;evI.prompt();await evI.userChoice;evI=null;$("inst").style.display="none"};
+window.addEventListener("appinstalled",()=>{$("inst").style.display="none"});
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("speechSynthesis" in window)speechSynthesis.getVoices();
+ir("ini");
+</script>
+</body>
+</html>
